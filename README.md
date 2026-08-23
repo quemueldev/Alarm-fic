@@ -24,11 +24,11 @@ Quando o horário atual corresponde a um dos horários programados, o sistema ac
 
 Antes do acionamento, o sistema também verifica:
 
-1. Se o sistema está ativo;
-2. Se a data atual corresponde a algum feriado cadastrado;
-3. Se o dia da semana permite o funcionamento;
-4. Se o horário atual corresponde a um horário programado;
-5. Se o alarme já foi acionado naquele minuto.
+- Se o sistema está ativo;
+-  Se a data atual corresponde a algum feriado cadastrado;
+- Se o dia da semana permite o funcionamento;
+- Se o horário atual corresponde a um horário programado;
+- Se o alarme já foi acionado naquele minuto.
 
 # Hardware Protótipo
 - Arduino (uno ou nano);
