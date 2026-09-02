@@ -18,8 +18,8 @@ Hours table_hours[] = {
   {14, 45},
   {15, 35},
   //horario teste 
-  {17, 32},
-  {17, 33}
+  {22, 9},
+  {22, 10}
 
 };
 struct Date{
@@ -51,6 +51,7 @@ Date holidays[] = {
 
 const int SWITCH_PIN = 7;
 const int BUZZER = 12;
+const int ACTIVE_BTN = 4;
 
 void setup() {
   Serial.begin(9600);
@@ -61,12 +62,16 @@ void setup() {
   }
   pinMode(BUZZER, OUTPUT);
   pinMode(SWITCH_PIN, INPUT_PULLUP);
+  pinMode(ACTIVE_BTN, INPUT_PULLUP);
   
 };
 
 bool is_system_active(){
   return digitalRead(SWITCH_PIN) == LOW; // low == ativo
 };
+bool is_active_triggered(){
+  return digitalRead(ACTIVE_BTN) == LOW;
+}
 
 void alarm(){
   digitalWrite(BUZZER, HIGH);
@@ -88,7 +93,7 @@ bool validate_hour_and_day(Hours table_hours, DateTime moment){
   return (
     table_hours.hour == moment.hour() &&
     table_hours.minute == moment.minute() &&
-    (moment.dayOfTheWeek() != 5 && moment.dayOfTheWeek() != 0)
+    (moment.dayOfTheWeek() != 6 && moment.dayOfTheWeek() != 0)
   );
 };
 
@@ -102,9 +107,16 @@ void loop() {
     already_alarm = false;
     last_minute = moment.minute();
   }
+  if(is_active_triggered()){  
+    alarm();
+    while(is_active_triggered());
+  }
   if(!is_system_active()){
     return;
   }
+
+  
+  
 
   for (int i = 0; i < sizeof(table_hours) / sizeof(table_hours[0]); i++){
     Hours hours = table_hours[i];
@@ -116,3 +128,4 @@ void loop() {
     }
   }
 };
+
